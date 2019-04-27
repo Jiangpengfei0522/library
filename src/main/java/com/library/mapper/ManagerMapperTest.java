@@ -1,7 +1,10 @@
 package com.library.mapper;
 
 
+import com.library.bean.PageBean;
+import com.library.bean.UserInfo;
 import com.library.service.impl.ManagerServiceImpl;
+import com.library.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +20,8 @@ import javax.annotation.Resource;
 public class ManagerMapperTest {
     private static Logger logger = Logger.getLogger(ManagerMapperTest.class);
     //  private ApplicationContext ac = null;
-    @Resource(name="managerService")
-    ManagerServiceImpl managerService;
+    @Resource(name="uService")
+    UserServiceImpl userService;
 
 //  @Before
 //  public void before() {
@@ -28,9 +31,11 @@ public class ManagerMapperTest {
 
     @Test
     public void test1() {
-        String result = managerService.getPassByName("jiangpengfei");
-        // System.out.println(user.getUserName());
-        // logger.info("值："+user.getUserName());
-        logger.info(result);
+//        UserInfo userInfo=userService.selectByStuId("2016210402018");
+//        System.out.println(userInfo.getName()+","+userInfo.getUniversity());
+        PageBean<UserInfo> pageBean = userService.findByPage(1);
+        for(UserInfo userInfo:pageBean.getLists()){
+            System.out.println(userInfo.getName());
+        }
     }
 }

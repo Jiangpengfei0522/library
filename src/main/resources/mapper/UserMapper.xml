@@ -2,7 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.library.mapper.UserMapper">
-    <select id="selectPassByName" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT pass FROM manager WHERE username=#{username}
+
+    <resultMap id="BaseResultMap" type="com.library.bean.UserInfo">
+        <id column="stu_id" property="stuId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="university" property="university" jdbcType="VARCHAR"/>
+        <result column="college" property="college" jdbcType="VARCHAR"/>
+        <result column="is_confirmed" property="isConfirmed" jdbcType="INTEGER"/>
+        <result column="self_photo" property="selfPhoto" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="defaultTimes" property="defaultTimes" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        stu_id,name,university,college,is_confirmed,self_photo,telephone,defaultTimes
+    </sql>
+    <!-- 根据学号查询一条数据-->
+    <select id="selectByStuId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/> from users where stu_id=#{stuId} and is_confirmed=0
     </select>
+    <!-- 根据分页数据start 和size查询数据 -->
+    <select id="selectByPage" parameterType="Map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from users where is_confirmed=0
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+    <!--查询所有用户数据-->
+    <select id="selectUserList" resultType="com.library.bean.UserInfo">
+        select <include refid="Base_Column_List"/>
+        from users where is_confirmed=0;
+    </select>
+    <!--查询用户记录总数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from users where is_confirmed=0
+    </select>
+    <update id="updateByPrimaryKey" parameterType="com.library.bean.UserInfo">
+        update users
+        set is_confirmed=#{isConfirmed,jdbcType=INTEGER}
+        where stu_id=#{stu_id,jdbcType=VARCHAR}
+    </update>
 </mapper>

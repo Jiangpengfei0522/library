@@ -71,13 +71,13 @@
         <div class="navbar-default navbar-collapse" id="slider_left">
             <ul class="nav slider">
                 <li>
-                    <a href="#" onclick="showAtRight('accountCheck.jsp')">账户审核</a>
+                    <a href="#" onclick="showAtRight('/library/accountCheck')">账户审核</a>
                 </li>
                 <li>
-                    <a href="#" onclick="showAtRight('confirmSeated.jsp')">确认是否本人就坐</a>
+                    <a href="#" onclick="showAtRight('/library/confirmSeated')">确认是否本人就坐</a>
                 </li>
                 <li>
-                    <a href="#" onclick="showAtRight('seatCondition.jsp')">座位情况</a>
+                    <a href="#" onclick="showAtRight('/library/seatCondition')">座位情况</a>
                 </li>
                 <li>
                     <a href="#sub1" data-toggle="collapse">数据统计
@@ -85,11 +85,11 @@
                     </a>
                 </li>
                 <ul id="sub1" class="nav collapse">
-                    <li><a href="#" onclick="showAtRight('arrivedPeople.jsp')">&nbsp;&nbsp;到达人数统计</a></li>
-                    <li><a href="#" onclick="showAtRight('lostFaithPeople.jsp')">&nbsp;&nbsp;失信人数统计</a></li>
+                    <li><a href="#" onclick="showAtRight('/library/arrivedPeople')">&nbsp;&nbsp;到达人数统计</a></li>
+                    <li><a href="#" onclick="showAtRight('/library/lostFaithPeople')">&nbsp;&nbsp;失信人数统计</a></li>
                 </ul>
                 <li>
-                    <a href="#" onclick="showAtRight('accountAuthority.jsp')">账户恢复/禁用</a>
+                    <a href="#" onclick="showAtRight('/library/accountAuthority')">账户恢复/禁用</a>
                 </li>
             </ul>
         </div>

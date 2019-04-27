@@ -49,6 +49,19 @@ public class LoginController {
     @RequestMapping(value="/main",method = RequestMethod.GET)
     public String toMain(){return "mainIndex";}
 
-    @RequestMapping(value="logout",method = RequestMethod.GET)
+    @RequestMapping(value="/logout",method = RequestMethod.GET)
     public String toLogin(){return "index";}
+
+    @RequestMapping(value="/accountAuthority",method = RequestMethod.GET)
+    public String toAccountAuthority(){return "accountAuthority";}
+    @RequestMapping(value="/accountCheck",method = RequestMethod.GET)
+    public String toAccountCheck(){return "accountCheck";}
+    @RequestMapping(value="/arrivedPeople",method = RequestMethod.GET)
+    public String toArrivedPeople(){return "arrivedPeople";}
+    @RequestMapping(value="/confirmSeated",method = RequestMethod.GET)
+    public String toConfirmSeated(){return "confirmSeated";}
+    @RequestMapping(value="/lostFaithPeople",method = RequestMethod.GET)
+    public String toLostFaithPeople(){return "lostFaithPeople";}
+    @RequestMapping(value="/seatCondition",method = RequestMethod.GET)
+    public String toSeatCondition(){return "seatCondition";}
 }
