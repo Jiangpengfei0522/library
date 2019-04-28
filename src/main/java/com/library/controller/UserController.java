@@ -24,15 +24,14 @@ public class UserController {
     private IUserService userService;
 
     @RequestMapping(value = "/doQuery",method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String, PageBean<UserInfo>> query(@RequestParam(value="currentPage",defaultValue = "1",required = false) int currentPage,
-                                                 @RequestParam(value="stuId",required = false) String stuID) {
+    public String query(@RequestParam(value="currentPage",defaultValue = "1",required = false) int currentPage,
+                                                 @RequestParam(value="stuId",required = false) String stuID,
+                                                Map<String,Object> map) {
         System.out.println(stuID);
-        Map<String,PageBean<UserInfo>> hashMap = new HashMap<String, PageBean<UserInfo>>();
         if(stuID==null || stuID==""){
-            hashMap.put("pageMsg",userService.findByPage(currentPage));
-            System.out.println(hashMap.get("pageMsg"));
+            map.put("pageMsg",userService.findByPage(currentPage));
+            System.out.println(map.get("pageMsg"));
         }
-        return hashMap;
+        return "accountCheck";
     }
 }

@@ -7,10 +7,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Title</title>
-    <script src="../../js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../../css/header.css" type="text/css">
     <script src="../../js/jquery-3.3.1.min.js"></script>
@@ -21,11 +22,11 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header"><i class="fa fa-cog fa-spin"></i>&nbsp;控制台<small>&nbsp;&nbsp;&nbsp;欢迎使用五更鸡后台管理系统</small></h1>
 
-        <form>
+        <form action="/user/doQuery" method="get">
             <input type="text" placeholder="请输入查询学号" name="stuId" id="stuID">
-            <%--<input type="submit" value="查询" class="btn btn-default" id="btn_submit">--%>
+            <input type="submit" value="查询" class="btn btn-default" id="btn_submit">
         </form>
-        <button type="button" id="btn_submit">查询</button>
+        <%--<button type="button" id="btn_submit">查询</button>--%>
         <c:if test="${empty requestScope.pageMsg}">
             没有任何用户信息！
         </c:if>
@@ -77,28 +78,29 @@
             </tr>
         </table>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#btn_submit').click(function(){
-                var dataJson = {
-                    currentPage:"1",
-                    stuId:$("#stuID").val()
-                };
-                $.ajax({
-                    type:"get",
-                    url:"/user/doQuery",
-                    data:dataJson,
-                    dataType:"json",
-                    async:true,
-                    success:function (data) {
-                        alert(data.pageMsg)
-                    },
-                    error:function (data) {
-                        alert(data);
-                    }
-                })
-            });
-        });
-    </script>
+    <%--<script type="text/javascript">--%>
+        <%--$(document).ready(function(){--%>
+            <%--$('#btn_submit').click(function(){--%>
+                <%--var dataJson = {--%>
+                    <%--currentPage:"1",--%>
+                    <%--stuId:$("#stuID").val()--%>
+                <%--};--%>
+                <%--$.ajax({--%>
+                    <%--type:"get",--%>
+                    <%--url:"/user/doQuery",--%>
+                    <%--data:dataJson,--%>
+                    <%--dataType:"json",--%>
+                    <%--async:true,--%>
+                    <%--success:function (data) {--%>
+                        <%--console.log(data);--%>
+                        <%--window.location.href="/library/accountCheck"--%>
+                    <%--},--%>
+                    <%--error:function (data) {--%>
+                        <%--alert(data);--%>
+                    <%--}--%>
+                <%--})--%>
+            <%--});--%>
+        <%--});--%>
+    <%--</script>--%>
 </body>
 </html>

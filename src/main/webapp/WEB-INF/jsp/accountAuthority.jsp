@@ -9,10 +9,10 @@
 <html>
 <head>
     <title>Title</title>
-    <script src="../../js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../../css/header.css" type="text/css">
     <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
 </head>
 <body>
     <jsp:include page="header.jsp"/>
