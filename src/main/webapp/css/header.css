@@ -1,0 +1,35 @@
+.mynavbar{
+    min-width: 240px;
+}
+.navbar{
+    background-color: #fff4e3;
+    margin-bottom: 0px;
+    margin-right: 0px;
+}
+a{
+    color: black;
+}
+.logo{
+    background-color: #ffa45c;
+    width: 220px;
+    float: left;
+}
+.logo a{
+    color:white;
+}
+#slider_left{
+    background-color: #fff4e3;
+}
+@media (min-width: 768px) {
+    #slider_left{
+        width:200px;
+        height:100%;
+        position: absolute;
+    }
+}
+.slider li{
+    margin-top: 10px;
+    font-family: Arial;
+    font-size: 15px;
+    color: #5d5d5a;
+}
