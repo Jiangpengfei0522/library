@@ -12,14 +12,19 @@
         <result column="self_photo" property="selfPhoto" jdbcType="VARCHAR"/>
         <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
         <result column="defaultTimes" property="defaultTimes" jdbcType="VARCHAR"/>
+        <result column="is_forbidden" property="isForbidden" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        stu_id,name,university,college,is_confirmed,self_photo,telephone,defaultTimes
+        stu_id,name,university,college,is_confirmed,self_photo,telephone,defaultTimes,is_forbidden
     </sql>
     <!-- 根据学号查询一条数据-->
     <select id="selectByStuId" resultMap="BaseResultMap" parameterType="java.lang.String">
         select <include refid="Base_Column_List"/> from users where stu_id=#{stuId} and is_confirmed=0
+    </select>
+    <!-- 根据学号查询一条数据(禁用/恢复功能)-->
+    <select id="selectByStuIdForAuth" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/> from users where stu_id=#{stuId} and is_confirmed=1
     </select>
     <!-- 根据分页数据start 和size查询数据 -->
     <select id="selectByPage" parameterType="Map" resultMap="BaseResultMap">
@@ -29,14 +34,26 @@
             limit #{start},#{size}
         </if>
     </select>
+    <!-- 根据分页数据start 和size查询数据 -->
+    <select id="selectByPageForAuth" parameterType="Map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from users where is_confirmed=1
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
     <!--查询所有用户数据-->
     <select id="selectUserList" resultType="com.library.bean.UserInfo">
         select <include refid="Base_Column_List"/>
-        from users where is_confirmed=0;
+        from users where is_confirmed=0 desc defaultTimes
     </select>
     <!--查询用户记录总数-->
     <select id="selectCount" resultType="int">
         select count(*) from users where is_confirmed=0
+    </select>
+    <!--查询用户记录总数-->
+    <select id="selectCountForAuth" resultType="int">
+        select count(*) from users where is_confirmed=1
     </select>
     <update id="updateByPrimaryKey" parameterType="com.library.bean.UserInfo">
         update users

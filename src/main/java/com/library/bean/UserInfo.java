@@ -9,11 +9,12 @@ public class UserInfo {
     private String selfPhoto;
     private  String telephone;
     private Integer defaultTimes;
+    private Integer isForbidden;
 
     public UserInfo() {
     }
 
-    public UserInfo(String stuId, String name, String university, String college, Integer isConfirmed, String selfPhoto, String telephone, Integer defaultTimes) {
+    public UserInfo(String stuId, String name, String university, String college, Integer isConfirmed, String selfPhoto, String telephone, Integer defaultTimes, Integer isForbidden) {
         this.stuId = stuId;
         this.name = name;
         this.university = university;
@@ -22,6 +23,7 @@ public class UserInfo {
         this.selfPhoto = selfPhoto;
         this.telephone = telephone;
         this.defaultTimes = defaultTimes;
+        this.isForbidden = isForbidden;
     }
 
     public String getStuId() {
@@ -86,5 +88,13 @@ public class UserInfo {
 
     public void setDefaultTimes(Integer defaultTimes) {
         this.defaultTimes = defaultTimes;
+    }
+
+    public Integer getIsForbidden() {
+        return isForbidden;
+    }
+
+    public void setIsForbidden(Integer isForbidden) {
+        this.isForbidden = isForbidden;
     }
 }

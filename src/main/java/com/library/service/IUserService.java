@@ -18,8 +18,11 @@ public interface IUserService {
 //    //更新用户状态为已审核
 //    int updateByPrimaryKey(UserInfo record);
     UserInfo selectByStuId(String stuId);
+    UserInfo selectByStuIdForAuth(String stuId);
     PageBean<UserInfo> findByPage(int currentPage);
+    PageBean<UserInfo> findByPageForAuth(int currentPage);
     List<UserInfo> selectUserList();
     int selectCount();
+    int selectCountForAuth();
     int updateByPrimaryKey(UserInfo record);
 }

@@ -22,6 +22,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public UserInfo selectByStuIdForAuth(String stuId) {
+        return userMapper.selectByStuIdForAuth(stuId);
+    }
+
+    @Override
     public PageBean<UserInfo> findByPage(int currentPage) {
         HashMap<String,Object> map = new HashMap<String,Object>();
         PageBean<UserInfo> pageBean = new PageBean<UserInfo>();
@@ -52,6 +57,35 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public PageBean<UserInfo> findByPageForAuth(int currentPage) {
+        HashMap<String,Object> map = new HashMap<String,Object>();
+        PageBean<UserInfo> pageBean = new PageBean<UserInfo>();
+
+        //封装当前页数1
+        pageBean.setCurrPage(currentPage);
+
+        //每页显示的数据1
+        int pageSize=5;
+        pageBean.setPageSize(pageSize);
+
+        //封装总记录数
+        int totalCount = userMapper.selectCountForAuth();
+        pageBean.setTotalCount(totalCount);
+
+        //封装总页数
+        double tc = totalCount;
+        Double num =Math.ceil(tc/pageSize);//向上取整
+        pageBean.setTotalPage(num.intValue());
+
+        map.put("start",(currentPage-1)*pageSize);
+        map.put("size", pageBean.getPageSize());
+        //封装每页显示的数据
+        List<UserInfo> lists = userMapper.selectByPageForAuth(map);
+        pageBean.setLists(lists);
+
+        return pageBean;
+    }
+    @Override
     public List<UserInfo> selectUserList() {
         return userMapper.selectUserList();
     }
@@ -59,6 +93,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public int selectCount() {
         return userMapper.selectCount();
+    }
+
+    @Override
+    public int selectCountForAuth() {
+        return userMapper.selectCountForAuth();
     }
 
     @Override

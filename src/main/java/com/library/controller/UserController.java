@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,6 +34,49 @@ public class UserController {
             map.put("pageMsg",userService.findByPage(currentPage));
             System.out.println(map.get("pageMsg"));
         }
+        else{
+            UserInfo userInfo=userService.selectByStuId(stuID);
+            if(userInfo==null)
+                map.put("pageMsg",null);
+            else{
+                List<UserInfo> list = new ArrayList<UserInfo>();
+                list.add(userInfo);
+                PageBean<UserInfo> pageBean = new PageBean<>();
+                pageBean.setCurrPage(1);
+                pageBean.setLists(list);
+                pageBean.setPageSize(1);
+                pageBean.setTotalCount(1);
+                pageBean.setTotalPage(1);
+                map.put("pageMsg",pageBean);
+            }
+        }
         return "accountCheck";
+    }
+    @RequestMapping(value = "/doAuthQuery",method = RequestMethod.GET)
+    public String queryAuth(@RequestParam(value="currentPage",defaultValue = "1",required = false) int currentPage,
+                        @RequestParam(value="stuId",required = false) String stuID,
+                        Map<String,Object> map) {
+        System.out.println(stuID);
+        if(stuID==null || stuID==""){
+            map.put("pageMsgForAuth",userService.findByPageForAuth(currentPage));
+            System.out.println(map.get("pageMsgForAuth"));
+        }
+        else{
+            UserInfo userInfo=userService.selectByStuIdForAuth(stuID);
+            if(userInfo==null)
+                map.put("pageMsgForAuth",null);
+            else{
+                List<UserInfo> list = new ArrayList<UserInfo>();
+                list.add(userInfo);
+                PageBean<UserInfo> pageBean = new PageBean<>();
+                pageBean.setCurrPage(1);
+                pageBean.setLists(list);
+                pageBean.setPageSize(1);
+                pageBean.setTotalCount(1);
+                pageBean.setTotalPage(1);
+                map.put("pageMsgForAuth",pageBean);
+            }
+        }
+        return "accountAuthority";
     }
 }
