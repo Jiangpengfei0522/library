@@ -54,10 +54,10 @@
                         <th><a href="${u.selfPhoto}">点击查看图片</a></th>
                         <th>${u.defaultTimes}</th>
                         <c:if test="${u.isForbidden==0}">
-                            <th><a>禁用</a></th>
+                            <th><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=1">禁用</a></th>
                         </c:if>
                         <c:if test="${u.isForbidden==1}">
-                            <th><a>恢复</a></th>
+                            <th><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=0">恢复</a></th>
                         </c:if>
                     </tr>
                 </c:forEach>

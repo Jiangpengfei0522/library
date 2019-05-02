@@ -79,4 +79,24 @@ public class UserController {
         }
         return "accountAuthority";
     }
+    @RequestMapping(value="/forbidden")
+    public String doForbidden(@RequestParam(value="stuId") String stuId,@RequestParam(value="isForbidden")Integer isForbidden){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setStuId(stuId);
+        userInfo.setIsForbidden(isForbidden);
+        int result=userService.updateAuthByPrimaryKey(userInfo);
+        if(result==0)
+            System.out.println("更新失败");
+            return "accountAuthority";
+    }
+    @RequestMapping(value="/check")
+    public String doCheck(@RequestParam(value="stuId") String stuId){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setStuId(stuId);
+        userInfo.setIsConfirmed(1);
+        int result=userService.updateByPrimaryKey(userInfo);
+        if(result==0)
+            System.out.println("更新失败");
+        return "accountCheck";
+    }
 }

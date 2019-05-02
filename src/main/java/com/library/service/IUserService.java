@@ -25,4 +25,5 @@ public interface IUserService {
     int selectCount();
     int selectCountForAuth();
     int updateByPrimaryKey(UserInfo record);
+    int updateAuthByPrimaryKey(UserInfo record);
 }

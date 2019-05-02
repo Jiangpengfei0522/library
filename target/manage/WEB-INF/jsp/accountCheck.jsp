@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../../css/header.css" type="text/css">
     <script src="../../js/jquery-3.3.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <jsp:include page="header.jsp"/>
@@ -23,7 +24,9 @@
         <h1 class="page-header"><i class="fa fa-cog fa-spin"></i>&nbsp;控制台<small>&nbsp;&nbsp;&nbsp;欢迎使用五更鸡后台管理系统</small></h1>
 
         <form action="/user/doQuery" method="get">
-            <input type="text" placeholder="请输入查询学号" name="stuId" id="stuID">
+            <div class="col-xs-3">
+                <input type="text" placeholder="请输入查询学号" name="stuId" id="stuID" class="form-control">
+            </div>
             <input type="submit" value="查询" class="btn btn-default" id="btn_submit">
         </form>
         <%--<button type="button" id="btn_submit">查询</button>--%>
@@ -31,7 +34,7 @@
             没有任何用户信息！
         </c:if>
         <c:if test="${!empty requestScope.pageMsg}">
-            <table border="1" cellpadding="10" cellspacing="0" class="table">
+            <table  class="table">
                 <thead>
                     <tr>
                         <td>学号</td>
@@ -53,12 +56,12 @@
                         <th>${u.telephone}</th>
                         <th><a href="${u.selfPhoto}">点击查看图片</a></th>
                         <th>${u.defaultTimes}</th>
-                        <th><a>未审核</a></th>
+                        <th><a href="${pageContext.request.contextPath }/user/check?stuId=${u.stuId}">未审核</a></th>
                     </tr>
                 </c:forEach>
             </table>
         </c:if>
-        <table  border="0" cellspacing="0" cellpadding="0"  width="900px">
+        <table   class="table">
             <tr>
                 <td class="td2">
                     <span>第${requestScope.pageMsg.currPage }/ ${requestScope.pageMsg.totalPage}页</span>
@@ -78,29 +81,6 @@
             </tr>
         </table>
     </div>
-    <%--<script type="text/javascript">--%>
-        <%--$(document).ready(function(){--%>
-            <%--$('#btn_submit').click(function(){--%>
-                <%--var dataJson = {--%>
-                    <%--currentPage:"1",--%>
-                    <%--stuId:$("#stuID").val()--%>
-                <%--};--%>
-                <%--$.ajax({--%>
-                    <%--type:"get",--%>
-                    <%--url:"/user/doQuery",--%>
-                    <%--data:dataJson,--%>
-                    <%--dataType:"json",--%>
-                    <%--async:true,--%>
-                    <%--success:function (data) {--%>
-                        <%--console.log(data);--%>
-                        <%--window.location.href="/library/accountCheck"--%>
-                    <%--},--%>
-                    <%--error:function (data) {--%>
-                        <%--alert(data);--%>
-                    <%--}--%>
-                <%--})--%>
-            <%--});--%>
-        <%--});--%>
-    <%--</script>--%>
+
 </body>
 </html>

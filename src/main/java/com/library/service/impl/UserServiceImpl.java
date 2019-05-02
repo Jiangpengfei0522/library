@@ -104,4 +104,9 @@ public class UserServiceImpl implements IUserService {
     public int updateByPrimaryKey(UserInfo record) {
         return userMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public int updateAuthByPrimaryKey(UserInfo record) {
+        return userMapper.updateAuthByPrimaryKey(record);
+    }
 }

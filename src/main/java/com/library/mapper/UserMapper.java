@@ -19,4 +19,6 @@ public interface UserMapper {
     int selectCountForAuth();
     //更新用户状态为已审核
     int updateByPrimaryKey(UserInfo record);
+    //更新用户账号权限
+    int updateAuthByPrimaryKey(UserInfo record);
 }

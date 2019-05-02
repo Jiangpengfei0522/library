@@ -55,9 +55,16 @@
     <select id="selectCountForAuth" resultType="int">
         select count(*) from users where is_confirmed=1
     </select>
+    <!-- 更新用户状态为已审核-->
     <update id="updateByPrimaryKey" parameterType="com.library.bean.UserInfo">
         update users
         set is_confirmed=#{isConfirmed,jdbcType=INTEGER}
-        where stu_id=#{stu_id,jdbcType=VARCHAR}
+        where stu_id=#{stuId,jdbcType=VARCHAR}
+    </update>
+    <!--更新用户账号状态-->
+    <update id="updateAuthByPrimaryKey" parameterType="com.library.bean.UserInfo">
+        update users
+        set is_forbidden=#{isForbidden,jdbcType=INTEGER}
+        where stu_id=#{stuId,jdbcType=VARCHAR}
     </update>
 </mapper>

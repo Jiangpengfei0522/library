@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../../css/header.css" type="text/css">
     <script src="../../js/jquery-3.3.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <jsp:include page="header.jsp"/>
@@ -55,7 +56,7 @@
                         <th>${u.telephone}</th>
                         <th><a href="${u.selfPhoto}">点击查看图片</a></th>
                         <th>${u.defaultTimes}</th>
-                        <th><a>未审核</a></th>
+                        <th><a href="${pageContext.request.contextPath }/user/check?stuId=${u.stuId}">未审核</a></th>
                     </tr>
                 </c:forEach>
             </table>
