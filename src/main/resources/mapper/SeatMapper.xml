@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.SeatMapper">
+    <resultMap id="SeatResultMap" type="com.library.bean.Seat">
+        <id column="floor_id" property="floorId" jdbcType="INTEGER"/>
+        <id column="block_id" property="blockId" jdbcType="VARCHAR"/>
+        <id column="desk_id" property="deskId" jdbcType="INTEGER"/>
+        <id column="seat_id" property="seatId" jdbcType="VARCHAR"/>
+        <result column="is_used" property="isUsed" jdbcType="INTEGER"/>
+        <result column="used_date" property="usedDate" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Seat_Column_List">
+        floor_id,block_id,desk_id,seat_id,is_used,used_date
+    </sql>
+</mapper>

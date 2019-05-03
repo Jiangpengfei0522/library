@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.library.mapper.OrderMapper">
+    <!--private String stuId;
+    private Integer floorId;
+    private String blockId;
+    private Integer deskId;
+    private String seatId;
+    private String orderDate;
+    private String orderTime;
+    private String orderWeek;
+    private Integer isUsing;
+    private Integer orderId;
+    private String arrivedPhoto;
+    private Integer isArrived;-->
+    <resultMap id="OrderResultMap" type="com.library.bean.Order">
+        <id column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="stu_id" property="stuId" jdbcType="VARCHAR"/>
+        <result column="floor_id" property="floorId" jdbcType="INTEGER"/>
+        <result column="block_id" property="floorId" jdbcType="VARCHAR"/>
+        <result column="seat_id" property="floorId" jdbcType="INTEGER"/>
+        <result column="orderDate" property="floorId" jdbcType="VARCHAR"/>
+        <result column="orderTime" property="floorId" jdbcType="VARCHAR"/>
+        <result column="orderWeek" property="floorId" jdbcType="VARCHAR"/>
+        <result column="is_using" property="floorId" jdbcType="INTEGER"/>
+        <result column="arrived_photo" property="floorId" jdbcType="INTEGER"/>
+        <result column="is_arrived" property="floorId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Order_Column_List">
+        order_id,stu_id,floor_id,block_id,seat_id,orderDate,orderTime,orderWeek,is_using,arrived_photo,is_arrived
+    </sql>
+</mapper>
