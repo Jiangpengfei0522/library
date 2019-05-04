@@ -5,24 +5,24 @@ public class UserInfo {
     private String name;
     private String university;
     private String college;
+    private Integer creditScore;
     private Integer isConfirmed;
     private String selfPhoto;
     private  String telephone;
-    private Integer defaultTimes;
     private Integer isForbidden;
 
     public UserInfo() {
     }
 
-    public UserInfo(String stuId, String name, String university, String college, Integer isConfirmed, String selfPhoto, String telephone, Integer defaultTimes, Integer isForbidden) {
+    public UserInfo(String stuId, String name, String university, String college, Integer creditScore, Integer isConfirmed, String selfPhoto, String telephone, Integer isForbidden) {
         this.stuId = stuId;
         this.name = name;
         this.university = university;
         this.college = college;
+        this.creditScore = creditScore;
         this.isConfirmed = isConfirmed;
         this.selfPhoto = selfPhoto;
         this.telephone = telephone;
-        this.defaultTimes = defaultTimes;
         this.isForbidden = isForbidden;
     }
 
@@ -82,19 +82,19 @@ public class UserInfo {
         this.telephone = telephone;
     }
 
-    public Integer getDefaultTimes() {
-        return defaultTimes;
-    }
-
-    public void setDefaultTimes(Integer defaultTimes) {
-        this.defaultTimes = defaultTimes;
-    }
-
     public Integer getIsForbidden() {
         return isForbidden;
     }
 
     public void setIsForbidden(Integer isForbidden) {
         this.isForbidden = isForbidden;
+    }
+
+    public Integer getCreditScore() {
+        return creditScore;
+    }
+
+    public void setCreditScore(Integer creditScore) {
+        this.creditScore = creditScore;
     }
 }

@@ -10,6 +10,7 @@ public class Order {
     private String orderTime;
     private String orderWeek;
     private Integer isUsing;
+    private Integer sub_score;
     private Integer orderId;
     private String arrivedPhoto;
     private Integer isArrived;
@@ -17,7 +18,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(String stuId, Integer floorId, String blockId, Integer deskId, String seatId, String orderDate, String orderTime, String orderWeek, Integer isUsing, Integer orderId, String arrivedPhoto, Integer isArrived) {
+    public Order(String stuId, Integer floorId, String blockId, Integer deskId, String seatId, String orderDate, String orderTime, String orderWeek, Integer isUsing, Integer sub_score, Integer orderId, String arrivedPhoto, Integer isArrived) {
         this.stuId = stuId;
         this.floorId = floorId;
         this.blockId = blockId;
@@ -27,6 +28,7 @@ public class Order {
         this.orderTime = orderTime;
         this.orderWeek = orderWeek;
         this.isUsing = isUsing;
+        this.sub_score = sub_score;
         this.orderId = orderId;
         this.arrivedPhoto = arrivedPhoto;
         this.isArrived = isArrived;
@@ -126,5 +128,13 @@ public class Order {
 
     public void setIsArrived(Integer isArrived) {
         this.isArrived = isArrived;
+    }
+
+    public Integer getSub_score() {
+        return sub_score;
+    }
+
+    public void setSub_score(Integer sub_score) {
+        this.sub_score = sub_score;
     }
 }

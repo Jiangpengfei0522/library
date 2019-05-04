@@ -8,15 +8,15 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="university" property="university" jdbcType="VARCHAR"/>
         <result column="college" property="college" jdbcType="VARCHAR"/>
+        <result column="credit_score" property="creditScore" jdbcType="INTEGER"/>
         <result column="is_confirmed" property="isConfirmed" jdbcType="INTEGER"/>
         <result column="self_photo" property="selfPhoto" jdbcType="VARCHAR"/>
         <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
-        <result column="defaultTimes" property="defaultTimes" jdbcType="VARCHAR"/>
         <result column="is_forbidden" property="isForbidden" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        stu_id,name,university,college,is_confirmed,self_photo,telephone,defaultTimes,is_forbidden
+        stu_id,name,university,college,credit_score,is_confirmed,self_photo,telephone,is_forbidden
     </sql>
     <!-- 根据学号查询一条数据-->
     <select id="selectByStuId" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -45,7 +45,7 @@
     <!--查询所有用户数据-->
     <select id="selectUserList" resultType="com.library.bean.UserInfo">
         select <include refid="Base_Column_List"/>
-        from users where is_confirmed=0 desc defaultTimes
+        from users where is_confirmed=0
     </select>
     <!--查询用户记录总数-->
     <select id="selectCount" resultType="int">

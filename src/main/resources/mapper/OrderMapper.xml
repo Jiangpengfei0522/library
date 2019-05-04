@@ -2,32 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper  namespace="com.library.mapper.OrderMapper">
-    <!--private String stuId;
-    private Integer floorId;
-    private String blockId;
-    private Integer deskId;
-    private String seatId;
-    private String orderDate;
-    private String orderTime;
-    private String orderWeek;
-    private Integer isUsing;
-    private Integer orderId;
-    private String arrivedPhoto;
-    private Integer isArrived;-->
+    <!--定义一个Order类的返回映射-->
     <resultMap id="OrderResultMap" type="com.library.bean.Order">
         <id column="order_id" property="orderId" jdbcType="INTEGER"/>
         <result column="stu_id" property="stuId" jdbcType="VARCHAR"/>
         <result column="floor_id" property="floorId" jdbcType="INTEGER"/>
-        <result column="block_id" property="floorId" jdbcType="VARCHAR"/>
-        <result column="seat_id" property="floorId" jdbcType="INTEGER"/>
-        <result column="orderDate" property="floorId" jdbcType="VARCHAR"/>
-        <result column="orderTime" property="floorId" jdbcType="VARCHAR"/>
-        <result column="orderWeek" property="floorId" jdbcType="VARCHAR"/>
-        <result column="is_using" property="floorId" jdbcType="INTEGER"/>
-        <result column="arrived_photo" property="floorId" jdbcType="INTEGER"/>
-        <result column="is_arrived" property="floorId" jdbcType="VARCHAR"/>
+        <result column="block_id" property="blockId" jdbcType="VARCHAR"/>
+        <result column="desk_id" property="deskId" jdbcType="INTEGER"/>
+        <result column="seat_id" property="seatId" jdbcType="VARCHAR"/>
+        <result column="orderDate" property="orderDate" jdbcType="VARCHAR"/>
+        <result column="orderTime" property="orderTime" jdbcType="VARCHAR"/>
+        <result column="orderWeek" property="orderWeek" jdbcType="VARCHAR"/>
+        <result column="is_using" property="isUsing" jdbcType="INTEGER"/>
+        <result column="is_arrived" property="isArrived" jdbcType="INTEGER"/>
+        <result column="sub_score" property="subScore" jdbcType="INTEGER"/>
+        <result column="arrived_photo" property="arrivedPhoto" jdbcType="VARCHAR"/>
+
     </resultMap>
     <sql id="Order_Column_List">
-        order_id,stu_id,floor_id,block_id,seat_id,orderDate,orderTime,orderWeek,is_using,arrived_photo,is_arrived
+        order_id,stu_id,floor_id,block_id,desk_id,seat_id,orderDate,orderTime,orderWeek,is_using,is_arrived,sub_score,arrived_photo
     </sql>
+    <select id="selectByOrderId" parameterType="Integer" resultMap="OrderResultMap">
+        select <include refid="Order_Column_List"/> from orders where order_id=#{orderId} and is_using=2 and is_arrived=0
+    </select>
+
+    <!-- 根据分页数据start 和size查询数据 -->
+    <select id="selectOrderByPage" parameterType="Map" resultMap="OrderResultMap">
+        select <include refid="Order_Column_List"/>
+        from orders where is_using=2
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <!--根据订单号更改确认状态1-->
+    <update id="updateConfirmByOrderId" parameterType="Integer">
+        update orders set is_arrived=1 where order_id=#{orderId}
+    </update>
+    <!--根据订单号更改为违约状态2-->
+    <update id="updateDefaultByOrderId" parameterType="Integer">
+        update orders set is_arrived=2 where order_id=#{orderId}
+    </update>
+
+    <!--减少信誉分-->
+    <update id="updateCreditScoreByOrderId" parameterType="com.library.bean.UserInfo">
+        update users set credit_score=#{creditScore,jdbcType=INTEGER} where stu_id=#{stuId,jdbcType=VARCHAR}
+    </update>
+
+    <!--查询订单记录总数-->
+    <select id="selectCount" resultType="int">
+        select count(*) from orders where is_using=1 and is_arrived=0
+    </select>
+    <!--查询所有已到达但管理员未确认的订单数据-->
+    <select id="selectOrderList" resultType="com.library.bean.Order">
+        select <include refid="Order_Column_List"/>
+        from orders where is_arrived=0 and is_using=2
+    </select>
+    <!--查询所有未到达的订单数据-->
+    <select id="selectNoArrivedOrderList" resultType="com.library.bean.Order">
+        select <include refid="Order_Column_List"/>
+        from orders where is_using=1
+    </select>
+
 </mapper>
