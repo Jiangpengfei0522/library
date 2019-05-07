@@ -26,4 +26,5 @@ public interface IUserService {
     int selectCountForAuth();
     int updateByPrimaryKey(UserInfo record);
     int updateAuthByPrimaryKey(UserInfo record);
+    int countLostFaithPeople();
 }

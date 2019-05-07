@@ -16,11 +16,7 @@
     <mvc:annotation-driven/>
     <!-- 静态资源处理  css js imgs -->
     <mvc:default-servlet-handler/>
-    <!--定义一个任务，自动执行扫描违约订单，每5分钟-->
-    <bean id="scanDefaultOrder" class="com.library.controller.OrderController" />    
-    <task:scheduled-tasks>
-        <task:scheduled ref="scanDefaultOrder" method="scanDefaultOrder" cron="0 0/5 * * * ?" />
-    </task:scheduled-tasks>
+    <task:annotation-driven/>
 
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
     <bean id="mappingJacksonHttpMessageConverter"

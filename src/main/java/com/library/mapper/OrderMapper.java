@@ -22,4 +22,7 @@ public interface OrderMapper {
     //获得符合要求的订单结果集
     List<Order> selectOrderList();
     List<Order> selectNoArrivedOrderList();
+
+    List<String> selectStuIdSetByDate(String orderDate);
+    int selectCollegeByStuId(String stuId);
 }

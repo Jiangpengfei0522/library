@@ -43,7 +43,7 @@
                         <td>学院</td>
                         <td>联系电话</td>
                         <td>本人照片</td>
-                        <td>违约次数</td>
+                        <td>信用分</td>
                         <td>是否审核</td>
                     </tr>
                 </thead>
@@ -55,7 +55,7 @@
                         <th>${u.college}</th>
                         <th>${u.telephone}</th>
                         <th><a href="${u.selfPhoto}">点击查看图片</a></th>
-                        <th>${u.defaultTimes}</th>
+                        <th>${u.creditScore}</th>
                         <th><a href="${pageContext.request.contextPath }/user/check?stuId=${u.stuId}">未审核</a></th>
                     </tr>
                 </c:forEach>

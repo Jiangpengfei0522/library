@@ -21,4 +21,5 @@ public interface UserMapper {
     int updateByPrimaryKey(UserInfo record);
     //更新用户账号权限
     int updateAuthByPrimaryKey(UserInfo record);
+    int countLostFaithPeople();
 }

@@ -15,7 +15,7 @@
         <result column="orderWeek" property="orderWeek" jdbcType="VARCHAR"/>
         <result column="is_using" property="isUsing" jdbcType="INTEGER"/>
         <result column="is_arrived" property="isArrived" jdbcType="INTEGER"/>
-        <result column="sub_score" property="subScore" jdbcType="INTEGER"/>
+        <result column="sub_score" property="sub_score" jdbcType="INTEGER"/>
         <result column="arrived_photo" property="arrivedPhoto" jdbcType="VARCHAR"/>
 
     </resultMap>
@@ -29,7 +29,7 @@
     <!-- 根据分页数据start 和size查询数据 -->
     <select id="selectOrderByPage" parameterType="Map" resultMap="OrderResultMap">
         select <include refid="Order_Column_List"/>
-        from orders where is_using=2
+        from orders where is_using=2 and is_arrived=0
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
@@ -51,17 +51,26 @@
 
     <!--查询订单记录总数-->
     <select id="selectCount" resultType="int">
-        select count(*) from orders where is_using=1 and is_arrived=0
+        select count(*) from orders where is_using=2 and is_arrived=0
     </select>
     <!--查询所有已到达但管理员未确认的订单数据-->
-    <select id="selectOrderList" resultType="com.library.bean.Order">
+    <select id="selectOrderList" resultMap="OrderResultMap">
         select <include refid="Order_Column_List"/>
         from orders where is_arrived=0 and is_using=2
     </select>
     <!--查询所有未到达的订单数据-->
-    <select id="selectNoArrivedOrderList" resultType="com.library.bean.Order">
+    <select id="selectNoArrivedOrderList" resultMap="OrderResultMap">
         select <include refid="Order_Column_List"/>
-        from orders where is_using=1
+        from orders where is_using=1 and is_arrived=0
+    </select>
+    <!--查询当前日期的学号集合-->
+    <select id="selectStuIdSetByDate" resultType="java.lang.String" parameterType="java.lang.String">
+        select distinct stu_id from orders where orderDate = #{orderDate,jdbcType=VARCHAR} and is_arrived=1
+    </select>
+
+    <!--根据学号查学院-->
+    <select id="selectCollegeByStuId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select college from users where stu_id = #{stuId,jdbcType=VARCHAR}
     </select>
 
 </mapper>

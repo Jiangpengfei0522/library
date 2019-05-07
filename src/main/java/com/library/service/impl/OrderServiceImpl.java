@@ -74,4 +74,14 @@ public class OrderServiceImpl implements IOrderService {
     public List<Order> selectNoArrivedOrderList() {
         return orderMapper.selectNoArrivedOrderList();
     }
+
+    @Override
+    public List<String> selectStuIdSetByDate(String orderDate) {
+        return orderMapper.selectStuIdSetByDate(orderDate);
+    }
+
+    @Override
+    public int selectCollegeByStuId(String stuId) {
+        return orderMapper.selectCollegeByStuId(stuId);
+    }
 }

@@ -137,4 +137,23 @@ public class Order {
     public void setSub_score(Integer sub_score) {
         this.sub_score = sub_score;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "stuId='" + stuId + '\'' +
+                ", floorId=" + floorId +
+                ", blockId='" + blockId + '\'' +
+                ", deskId=" + deskId +
+                ", seatId='" + seatId + '\'' +
+                ", orderDate='" + orderDate + '\'' +
+                ", orderTime='" + orderTime + '\'' +
+                ", orderWeek='" + orderWeek + '\'' +
+                ", isUsing=" + isUsing +
+                ", sub_score=" + sub_score +
+                ", orderId=" + orderId +
+                ", arrivedPhoto='" + arrivedPhoto + '\'' +
+                ", isArrived=" + isArrived +
+                '}';
+    }
 }

@@ -99,4 +99,23 @@ public class UserController {
             System.out.println("更新失败");
         return "accountCheck";
     }
+    @RequestMapping(value = "/countPeople",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> countPeople(){
+        int total = userService.selectCountForAuth();
+        int real = userService.countLostFaithPeople();
+        int lost = total-real;
+        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> map1 = new HashMap<>();
+        Map<String,Object> map2 = new HashMap<>();
+        List<Map<String,Object>> list= new ArrayList<>();
+        map1.put("value",real);
+        map1.put("name","诚信人数");
+        map2.put("value",lost);
+        map2.put("name","失信人数");
+        list.add(map1);
+        list.add(map2);
+        map.put("success",list);
+        return map;
+    }
 }

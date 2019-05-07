@@ -53,4 +53,14 @@ public class PageBean<T> {
         this.lists = lists;
     }
 
+    @Override
+    public String toString() {
+        return "PageBean{" +
+                "currPage=" + currPage +
+                ", pageSize=" + pageSize +
+                ", totalCount=" + totalCount +
+                ", totalPage=" + totalPage +
+                ", lists=" + lists +
+                '}';
+    }
 }

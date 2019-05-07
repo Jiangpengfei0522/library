@@ -40,7 +40,7 @@
                     <td>学院</td>
                     <td>联系电话</td>
                     <td>本人照片</td>
-                    <td>违约次数</td>
+                    <td>信用分</td>
                     <td>恢复/禁用</td>
                 </tr>
                 </thead>
@@ -52,7 +52,7 @@
                         <th>${u.college}</th>
                         <th>${u.telephone}</th>
                         <th><a href="${u.selfPhoto}">点击查看图片</a></th>
-                        <th>${u.defaultTimes}</th>
+                        <th>${u.creditScore}</th>
                         <c:if test="${u.isForbidden==0}">
                             <th><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=1">禁用</a></th>
                         </c:if>

@@ -4,7 +4,7 @@ public class UserInfo {
     private String stuId;
     private String name;
     private String university;
-    private String college;
+    private Integer college;
     private Integer creditScore;
     private Integer isConfirmed;
     private String selfPhoto;
@@ -14,7 +14,7 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public UserInfo(String stuId, String name, String university, String college, Integer creditScore, Integer isConfirmed, String selfPhoto, String telephone, Integer isForbidden) {
+    public UserInfo(String stuId, String name, String university, Integer college, Integer creditScore, Integer isConfirmed, String selfPhoto, String telephone, Integer isForbidden) {
         this.stuId = stuId;
         this.name = name;
         this.university = university;
@@ -50,11 +50,11 @@ public class UserInfo {
         this.university = university;
     }
 
-    public String getCollege() {
+    public Integer getCollege() {
         return college;
     }
 
-    public void setCollege(String college) {
+    public void setCollege(Integer college) {
         this.college = college;
     }
 

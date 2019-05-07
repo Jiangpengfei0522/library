@@ -16,4 +16,6 @@ public interface IOrderService {
     int updateCreditScoreByOrderId(UserInfo userInfo);
     List<Order> selectOrderList();
     List<Order> selectNoArrivedOrderList();
+    List<String> selectStuIdSetByDate(String orderDate);
+    int selectCollegeByStuId(String stuId);
 }
