@@ -79,16 +79,53 @@ public class OrderController {
         map.put("success",collegeList);
         return map;
     }
-
+    @RequestMapping(value = "querySeat",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> querySeat(@RequestParam(value = "orderDate")String orderDate,
+                                        @RequestParam(value = "floor")Integer floor,
+                                        @RequestParam(value = "block")String block){
+        HashMap<String,Object>  map = new HashMap<>();
+        map.put("orderDate",orderDate);
+        map.put("floorId",floor);
+        map.put("blockId",block);
+        List<Order> list = orderService.selectOccupiedSeat(map);
+        Integer[] arrA = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        Integer[] arrB = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        Integer[] arrC = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        Integer[] arrD = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        for(Order o:list){
+            if(o.getSeatId().equals("A"))
+                arrA[o.getDeskId()-1]++;
+            else if(o.getSeatId().equals("B"))
+                arrB[o.getDeskId()-1]++;
+            else if(o.getSeatId().equals("C"))
+                arrC[o.getDeskId()-1]++;
+            else
+                arrD[o.getDeskId()-1]++;
+        }
+        List<Integer> listA = new ArrayList<>(arrA.length);
+        Collections.addAll(listA,arrA);
+        List<Integer> listB = new ArrayList<>(arrB.length);
+        Collections.addAll(listB,arrB);
+        List<Integer> listC = new ArrayList<>(arrC.length);
+        Collections.addAll(listC,arrC);
+        List<Integer> listD = new ArrayList<>(arrD.length);
+        Collections.addAll(listD,arrD);
+        map.put("listA",listA);
+        map.put("listB",listB);
+        map.put("listC",listC);
+        map.put("listD",listD);
+        return map;
+    }
     @Scheduled(cron="0 0/5 * * * ?")
     public void scanDefaultOrder(){
         List<Order> list = orderService.selectNoArrivedOrderList();
         for(Order o:list){
             String date = o.getOrderDate()+" "+o.getOrderTime().split("-")[0];
-            System.out.println(date);
-            System.out.println(o);
+            //System.out.println(date);
+            //System.out.println(o);
             String stuId=o.getStuId();
-            System.out.println(stuId);
+            //System.out.println(stuId);
             UserInfo userInfo = userService.selectByStuIdForAuth(stuId);
             Integer creditScore = userInfo.getCreditScore();
             creditScore -=10;
@@ -96,7 +133,7 @@ public class OrderController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//要转换的日期格式，根据实际调整""里面内容
             try {
                 String now = sdf.format(new Date());
-                System.out.println(now);
+                //System.out.println(now);
                 long nowToSecond = sdf.parse(now).getTime();
                 long dateToSecond = sdf.parse(date).getTime();//sdf.parse()实现日期转换为Date格式，然后getTime()转换为毫秒数值
                 if(nowToSecond-dateToSecond>900){
@@ -105,8 +142,8 @@ public class OrderController {
                     orderService.updateCreditScoreByOrderId(userInfo);
                     System.out.println("更新结束...");
                 }
-                System.out.println(nowToSecond);
-                System.out.println(dateToSecond);
+                //System.out.println(nowToSecond);
+                //System.out.println(dateToSecond);
             }catch (ParseException e){
                 e.printStackTrace();
             }

@@ -72,5 +72,10 @@
     <select id="selectCollegeByStuId" parameterType="java.lang.String" resultType="java.lang.Integer">
         select college from users where stu_id = #{stuId,jdbcType=VARCHAR}
     </select>
-
+    <!--查询所有被占位置信息-->
+    <select id="selectOccupiedSeat" parameterType="Map" resultMap="OrderResultMap">
+        select <include refid="Order_Column_List"/>
+        from orders where orderDate=#{orderDate,jdbcType=VARCHAR} and is_using&lt;3 and is_arrived&lt;2 and floor_id=#{floorId,jdbcType=INTEGER}
+        and block_id=#{blockId,jdbcType=VARCHAR}
+    </select>
 </mapper>

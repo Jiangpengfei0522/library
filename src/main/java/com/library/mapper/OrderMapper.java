@@ -25,4 +25,5 @@ public interface OrderMapper {
 
     List<String> selectStuIdSetByDate(String orderDate);
     int selectCollegeByStuId(String stuId);
+    List<Order> selectOccupiedSeat(HashMap<String,Object> map);
 }

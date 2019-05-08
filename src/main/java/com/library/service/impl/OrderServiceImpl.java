@@ -84,4 +84,9 @@ public class OrderServiceImpl implements IOrderService {
     public int selectCollegeByStuId(String stuId) {
         return orderMapper.selectCollegeByStuId(stuId);
     }
+
+    @Override
+    public List<Order> selectOccupiedSeat(HashMap<String,Object> map) {
+        return orderMapper.selectOccupiedSeat(map);
+    }
 }

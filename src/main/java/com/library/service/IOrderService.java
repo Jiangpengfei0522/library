@@ -5,6 +5,7 @@ import com.library.bean.Order;
 import com.library.bean.PageBean;
 import com.library.bean.UserInfo;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -18,4 +19,5 @@ public interface IOrderService {
     List<Order> selectNoArrivedOrderList();
     List<String> selectStuIdSetByDate(String orderDate);
     int selectCollegeByStuId(String stuId);
+    List<Order> selectOccupiedSeat(HashMap<String,Object> map);
 }
