@@ -13,13 +13,13 @@
 <div class="navbar-default navbar-collapse" id="slider_left">
     <ul class="nav slider">
         <li>
-            <a href="/library/accountCheck">账户审核</a>
+            <a href="${pageContext.request.contextPath }/library/accountCheck">账户审核</a>
         </li>
         <li>
-            <a href="/library/confirmSeated">确认是否本人就坐</a>
+            <a href="${pageContext.request.contextPath }/library/confirmSeated">确认是否本人就坐</a>
         </li>
         <li>
-            <a href="/library/seatCondition" >座位情况</a>
+            <a href="${pageContext.request.contextPath }/library/seatCondition" >座位情况</a>
         </li>
         <li>
             <a href="#sub1" data-toggle="collapse">数据统计
@@ -27,11 +27,11 @@
             </a>
         </li>
         <ul id="sub1" class="nav collapse">
-            <li><a href="/library/arrivedPeople" >&nbsp;&nbsp;到达人数统计</a></li>
-            <li><a href="/library/lostFaithPeople" >&nbsp;&nbsp;失信人数统计</a></li>
+            <li><a href="${pageContext.request.contextPath }/library/arrivedPeople" >&nbsp;&nbsp;到达人数统计</a></li>
+            <li><a href="${pageContext.request.contextPath }/library/lostFaithPeople" >&nbsp;&nbsp;失信人数统计</a></li>
         </ul>
         <li>
-            <a href="/library/accountAuthority">账户恢复/禁用</a>
+            <a href="${pageContext.request.contextPath }/library/accountAuthority">账户恢复/禁用</a>
         </li>
     </ul>
 </div>

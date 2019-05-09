@@ -10,12 +10,12 @@
 <head>
     <title>Title</title>
 
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/header.css" type="text/css">
-    <link rel="stylesheet" href="../../css/seatStyle.css" type="text/css">
-    <script src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/YYMMDD.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/header.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/seatStyle.css" type="text/css">
+    <script src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath }/js/YYMMDD.js"></script>
 </head>
 <body>
     <jsp:include page="header.jsp"/>
@@ -89,7 +89,7 @@
         $.ajax({
             type : "post",
             async : true, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
-            url : "/order/querySeat",
+            url : "${pageContext.request.contextPath }/order/querySeat",
             data : dateJson,
             dataType : "json", //返回数据形式为json
             success : function(result) {

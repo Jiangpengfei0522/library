@@ -10,11 +10,11 @@
 <head>
     <title>Title</title>
 
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/header.css" type="text/css">
-    <script src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/echarts.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/header.css" type="text/css">
+    <script src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath }/js/echarts.js"></script>
 </head>
 <body>
     <jsp:include page="header.jsp"/>

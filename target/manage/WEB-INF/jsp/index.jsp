@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <title>管理端登录</title>
     <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-    <link rel="stylesheet" href="../../css/style.css">
-    <script src='../../js/jquery-3.3.1.min.js'></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css">
+    <script src='${pageContext.request.contextPath }/js/jquery-3.3.1.min.js'></script>
 </head>
 <body>
     <div class="login-form">
-    <img src="../../image/logo.png" width="213" height="120">
+    <img src="${pageContext.request.contextPath }/image/logo.png" width="213" height="120">
     <form method="post">
         <div class="form-group ">
             <input type="text" class="form-control" placeholder="用户名 " id="UserName" name="username">
@@ -35,7 +35,7 @@
                 password:$("#Passwod").val()
             };
             $.ajax({
-                url:"/library/dologin",
+                url:"${pageContext.request.contextPath }/library/dologin",
                 type:"get",
                 data:dataJson,
                 dataType:"json",
@@ -43,7 +43,7 @@
                 success:function (data) {
                     alert("返回成功")
                     if(data && data.success == "true"){
-                        window.location.href= "/library/main";
+                        window.location.href= "${pageContext.request.contextPath }/library/main";
                     }
                     else{
                         $('.log-status').addClass('wrong-entry');

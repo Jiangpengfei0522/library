@@ -10,17 +10,17 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/header.css" type="text/css">
-    <script src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/header.css" type="text/css">
+    <script src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
 </head>
 <body>
     <jsp:include page="header.jsp"/>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header"><i class="fa fa-cog fa-spin"></i>&nbsp;控制台<small>&nbsp;&nbsp;&nbsp;欢迎使用五更鸡后台管理系统</small></h1>
 
-        <form action="/user/doAuthQuery" method="get">
+        <form action="${pageContext.request.contextPath }/user/doAuthQuery" method="get">
             <div class="col-xs-3">
                 <input type="text" placeholder="请输入查询学号" name="stuId" id="stuID" class="form-control">
             </div>

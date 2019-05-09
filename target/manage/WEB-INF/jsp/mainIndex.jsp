@@ -10,16 +10,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="../../css/header.css" type="text/css">
-    <script src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath }/css/header.css" type="text/css">
+    <script src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
     <title>五更鸡后台管理</title>
 </head>
 <body>
         <nav class="navbar">
             <div class="logo">
-                <a href="#"><img src="../../image/logo_small.png" height="55" width="56"></a>
+                <a href="#"><img src="${pageContext.request.contextPath }/image/logo_small.png" height="55" width="56"></a>
                 <a href="#">图书馆预约系统管理平台</a>
             </div>
             <ul class="nav navbar-nav navbar-right mynavbar">
@@ -31,13 +31,13 @@
         <div class="navbar-default navbar-collapse" id="slider_left">
             <ul class="nav slider">
                 <li>
-                    <a href="/library/accountCheck">账户审核</a>
+                    <a href="${pageContext.request.contextPath }/library/accountCheck">账户审核</a>
                 </li>
                 <li>
-                    <a href="/library/confirmSeated">确认是否本人就坐</a>
+                    <a href="${pageContext.request.contextPath }/library/confirmSeated">确认是否本人就坐</a>
                 </li>
                 <li>
-                    <a href="/library/seatCondition" >座位情况</a>
+                    <a href="${pageContext.request.contextPath }/library/seatCondition" >座位情况</a>
                 </li>
                 <li>
                     <a href="#sub1" data-toggle="collapse">数据统计
@@ -45,11 +45,11 @@
                     </a>
                 </li>
                 <ul id="sub1" class="nav collapse">
-                    <li><a href="/library/arrivedPeople" >&nbsp;&nbsp;到达人数统计</a></li>
-                    <li><a href="/library/lostFaithPeople" >&nbsp;&nbsp;失信人数统计</a></li>
+                    <li><a href="${pageContext.request.contextPath }/library/arrivedPeople" >&nbsp;&nbsp;到达人数统计</a></li>
+                    <li><a href="${pageContext.request.contextPath }/library/lostFaithPeople" >&nbsp;&nbsp;失信人数统计</a></li>
                 </ul>
                 <li>
-                    <a href="/library/accountAuthority">账户恢复/禁用</a>
+                    <a href="${pageContext.request.contextPath }/library/accountAuthority">账户恢复/禁用</a>
                 </li>
             </ul>
         </div>
