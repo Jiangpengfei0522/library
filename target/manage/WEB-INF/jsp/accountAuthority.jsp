@@ -16,6 +16,22 @@
     <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <%String[] college= {"杭州国际服务工程学院",
+        "外国语学院",
+                "经济与管理学院",
+                "法学院",
+                "政治与社会学院",
+                "教育学院",
+                "体育与健康学院",
+                "人文学院",
+                "理学院",
+                "材料与化学化工",
+                "生命与环境科学学院",
+                "医学院",
+                "阿里巴巴商学院",
+                "美术学院",
+                "经亨颐学院",
+                "国际教育学院"};%>
     <jsp:include page="header.jsp"/>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header"><i class="fa fa-cog fa-spin"></i>&nbsp;控制台<small>&nbsp;&nbsp;&nbsp;欢迎使用五更鸡后台管理系统</small></h1>
@@ -37,7 +53,6 @@
                     <td>学号</td>
                     <td>姓名</td>
                     <td>学校</td>
-                    <td>学院</td>
                     <td>联系电话</td>
                     <td>本人照片</td>
                     <td>信用分</td>
@@ -49,9 +64,8 @@
                         <th>${u.stuId}</th>
                         <th>${u.name}</th>
                         <th>${u.university}</th>
-                        <th>${u.college}</th>
                         <th>${u.telephone}</th>
-                        <th><a href="${u.selfPhoto}">点击查看图片</a></th>
+                        <th><a href="${pageContext.request.contextPath }/${u.selfPhoto}">点击查看图片</a></th>
                         <th>${u.creditScore}</th>
                         <c:if test="${u.isForbidden==0}">
                             <th><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=1">禁用</a></th>

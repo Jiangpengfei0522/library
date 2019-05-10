@@ -23,13 +23,13 @@
         order_id,stu_id,floor_id,block_id,desk_id,seat_id,orderDate,orderTime,orderWeek,is_using,is_arrived,sub_score,arrived_photo
     </sql>
     <select id="selectByOrderId" parameterType="Integer" resultMap="OrderResultMap">
-        select <include refid="Order_Column_List"/> from orders where order_id=#{orderId} and is_using=2 and is_arrived=0
+        select <include refid="Order_Column_List"/> from orders where order_id=#{orderId}
     </select>
 
     <!-- 根据分页数据start 和size查询数据 -->
     <select id="selectOrderByPage" parameterType="Map" resultMap="OrderResultMap">
         select <include refid="Order_Column_List"/>
-        from orders where is_using=2 and is_arrived=0
+        from orders where (is_using=2 or is_using=3) and is_arrived=0
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
@@ -51,12 +51,12 @@
 
     <!--查询订单记录总数-->
     <select id="selectCount" resultType="int">
-        select count(*) from orders where is_using=2 and is_arrived=0
+        select count(*) from orders where (is_using=2 or is_using=3) and is_arrived=0
     </select>
     <!--查询所有已到达但管理员未确认的订单数据-->
     <select id="selectOrderList" resultMap="OrderResultMap">
         select <include refid="Order_Column_List"/>
-        from orders where is_arrived=0 and is_using=2
+        from orders where (is_using=2 or is_using=3) and is_arrived=0
     </select>
     <!--查询所有未到达的订单数据-->
     <select id="selectNoArrivedOrderList" resultMap="OrderResultMap">

@@ -53,8 +53,11 @@
                         <th>${u.seatId}</th>
                         <th>${u.orderDate}</th>
                         <th>${u.orderTime}</th>
-                        <th><a href="${u.arrivedPhoto}">点击查看图片</a></th>
-                        <th><a href="${pageContext.request.contextPath }/order/confirm?orderId=${u.orderId}">确认本人到达</a></th>
+                        <th><a href="${pageContext.request.contextPath }/${u.arrivedPhoto}">点击查看图片</a></th>
+                        <th>
+                            <a href="${pageContext.request.contextPath }/order/confirm?orderId=${u.orderId}">确认&nbsp;</a>
+                            <a href="${pageContext.request.contextPath }/order/default?orderId=${u.orderId}">违约</a>
+                        </th>
                     </tr>
                 </c:forEach>
             </table>

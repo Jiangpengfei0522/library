@@ -41,7 +41,6 @@
                 dataType:"json",
                 async:true,//设置异步，不然可能接收不到后端返回的json
                 success:function (data) {
-                    alert("返回成功")
                     if(data && data.success == "true"){
                         window.location.href= "${pageContext.request.contextPath }/library/main";
                     }

@@ -40,7 +40,6 @@
                         <td>学号</td>
                         <td>姓名</td>
                         <td>学校</td>
-                        <td>学院</td>
                         <td>联系电话</td>
                         <td>本人照片</td>
                         <td>信用分</td>
@@ -52,7 +51,6 @@
                         <th>${u.stuId}</th>
                         <th>${u.name}</th>
                         <th>${u.university}</th>
-                        <th>${u.college}</th>
                         <th>${u.telephone}</th>
                         <th><a href="${u.selfPhoto}">点击查看图片</a></th>
                         <th>${u.creditScore}</th>

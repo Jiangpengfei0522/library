@@ -46,12 +46,12 @@ public class OrderController {
     public String doDefault(@RequestParam(value = "orderId") Integer orderId){
         Order order = orderService.selectByOrderId(orderId);
         String stuId = order.getStuId();
-        UserInfo userInfo = userService.selectByStuId(stuId);
+        UserInfo userInfo = userService.selectByStuIdForAuth(stuId);
         Integer score = userInfo.getCreditScore();
         score -= 10;
         userInfo.setCreditScore(score);
         int result1=orderService.updateCreditScoreByOrderId(userInfo);
-        int result=orderService.updateConfirmByOrderId(orderId);
+        int result=orderService.updateDefaultByOrderId(orderId);
         if(result!=0&&result1!=0)
             System.out.println("更新成功");
         return "confirmSeated";
