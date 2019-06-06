@@ -1,5 +1,6 @@
 package com.library.service.impl;
 
+import com.library.bean.OccupancyRate;
 import com.library.bean.Order;
 import com.library.bean.PageBean;
 import com.library.bean.UserInfo;
@@ -56,8 +57,8 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public int updateDefaultByOrderId(Integer orderId) {
-        return orderMapper.updateDefaultByOrderId(orderId);
+    public int updateDefaultByOrderId(HashMap<String,Object> map) {
+        return orderMapper.updateDefaultByOrderId(map);
     }
 
     @Override
@@ -88,5 +89,20 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public List<Order> selectOccupiedSeat(HashMap<String,Object> map) {
         return orderMapper.selectOccupiedSeat(map);
+    }
+
+    @Override
+    public OccupancyRate selectRate(String usualDate) {
+        return orderMapper.selectRate(usualDate);
+    }
+
+    @Override
+    public int selectCountOrders(String orderDate) {
+        return orderMapper.selectCountOrders(orderDate);
+    }
+
+    @Override
+    public int insertRate(HashMap<String, Object> map) {
+        return orderMapper.insertRate(map);
     }
 }

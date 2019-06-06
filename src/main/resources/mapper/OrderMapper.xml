@@ -19,6 +19,10 @@
         <result column="arrived_photo" property="arrivedPhoto" jdbcType="VARCHAR"/>
 
     </resultMap>
+    <resultMap id="RateResultMap" type="com.library.bean.OccupancyRate">
+        <id column="usualdate" property="usualDate" jdbcType="VARCHAR"/>
+        <result column="rate" property="rate" jdbcType="DECIMAL"/>
+    </resultMap>
     <sql id="Order_Column_List">
         order_id,stu_id,floor_id,block_id,desk_id,seat_id,orderDate,orderTime,orderWeek,is_using,is_arrived,sub_score,arrived_photo
     </sql>
@@ -40,8 +44,8 @@
         update orders set is_arrived=1 where order_id=#{orderId}
     </update>
     <!--根据订单号更改为违约状态2-->
-    <update id="updateDefaultByOrderId" parameterType="Integer">
-        update orders set is_arrived=2 where order_id=#{orderId}
+    <update id="updateDefaultByOrderId" parameterType="Map">
+        update orders set is_arrived=2,sub_score=#{subScore},is_using=5 where order_id=#{orderId}
     </update>
 
     <!--减少信誉分-->
@@ -78,4 +82,17 @@
         from orders where orderDate=#{orderDate,jdbcType=VARCHAR} and is_using&lt;3 and is_arrived&lt;2 and floor_id=#{floorId,jdbcType=INTEGER}
         and block_id=#{blockId,jdbcType=VARCHAR}
     </select>
+    <!--查询前一天的占座率-->
+    <select id="selectRate" resultMap="RateResultMap" parameterType="java.lang.String">
+        select usualdate,rate from OccupancyRate where usualdate=#{usualDate,jdbcType=DATE}
+    </select>
+    <!--查询所有合法订单集合数-->
+    <select id="selectCountOrders" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(*) from orders where orderDate=#{orderDate} and is_arrived=1
+        and order_id in (select max(order_id) from library.orders group by floor_id,block_id,desk_id,seat_id);
+    </select>
+    <!--插入占座率-->
+    <insert id="insertRate" parameterType="Map">
+        insert into OccupancyRate values(#{usualDate},#{Rate})
+    </insert>
 </mapper>

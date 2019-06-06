@@ -64,4 +64,6 @@ public class LoginController {
     public String toLostFaithPeople(){return "lostFaithPeople";}
     @RequestMapping(value="/seatCondition",method = RequestMethod.GET)
     public String toSeatCondition(){return "seatCondition";}
+    @RequestMapping(value="/reportSet",method = RequestMethod.GET)
+    public String toReportSet(){return "reportSet";}
 }

@@ -1,5 +1,6 @@
 package com.library.mapper;
 
+import com.library.bean.OccupancyRate;
 import com.library.bean.Order;
 import com.library.bean.UserInfo;
 
@@ -14,7 +15,7 @@ public interface OrderMapper {
     //更新为确认到达状态
     int updateConfirmByOrderId(Integer orderId);
     //更新为违约状态
-    int updateDefaultByOrderId(Integer orderId);
+    int updateDefaultByOrderId(HashMap<String,Object> map);
     //更新信用分
     int updateCreditScoreByOrderId(UserInfo userInfo);
     //获得符合要求的订单总数
@@ -26,4 +27,7 @@ public interface OrderMapper {
     List<String> selectStuIdSetByDate(String orderDate);
     int selectCollegeByStuId(String stuId);
     List<Order> selectOccupiedSeat(HashMap<String,Object> map);
+    OccupancyRate selectRate(String usualDate);
+    int selectCountOrders(String orderDate);
+    int insertRate(HashMap<String,Object> map);
 }

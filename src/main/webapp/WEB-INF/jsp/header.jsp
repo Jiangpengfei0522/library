@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar">
     <div class="logo">
-        <a href="#"><img src="../../image/logo_small.png" height="55" width="56"></a>
+        <a href="#"><img src="${pageContext.request.contextPath }/image/logo_small.png" height="55" width="56"></a>
         <a href="#">图书馆预约系统管理平台</a>
     </div>
     <ul class="nav navbar-nav navbar-right mynavbar">
@@ -32,6 +32,9 @@
         </ul>
         <li>
             <a href="${pageContext.request.contextPath }/library/accountAuthority">账户恢复/禁用</a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath }/library/reportSet">举报记录</a>
         </li>
     </ul>
 </div>

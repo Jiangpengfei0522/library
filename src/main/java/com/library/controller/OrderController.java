@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.bean.OccupancyRate;
 import com.library.bean.Order;
 import com.library.bean.PageBean;
 import com.library.bean.UserInfo;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -44,15 +47,40 @@ public class OrderController {
     }
     @RequestMapping(value = "/default",method = RequestMethod.GET)
     public String doDefault(@RequestParam(value = "orderId") Integer orderId){
+        SimpleDateFormat Csdf = new SimpleDateFormat("yyyy-MM-dd");
+        String yesterday=Csdf.format(new Date().getTime()- 86400000L);
+        OccupancyRate result=orderService.selectRate(yesterday);
+        BigDecimal rate=result.getRate();
+        double weight=0;
+        BigDecimal ninety=new BigDecimal(90);
+        BigDecimal eighty=new BigDecimal(80);
+        BigDecimal seventy=new BigDecimal(70);
+        BigDecimal sixty=new BigDecimal(60);
+        BigDecimal fifty=new BigDecimal(50);
+        if(rate.compareTo(ninety)==1||rate.compareTo(ninety)==0)
+            weight=2;
+        else if(rate.compareTo(eighty)==1||rate.compareTo(eighty)==0)
+            weight=1.8;
+        else if(rate.compareTo(seventy)==1||rate.compareTo(seventy)==0)
+            weight=1.6;
+        else if(rate.compareTo(sixty)==1||rate.compareTo(sixty)==0)
+            weight=1.4;
+        else if(rate.compareTo(fifty)==1||rate.compareTo(fifty)==0)
+            weight=1.2;
+        else
+            weight=1;
         Order order = orderService.selectByOrderId(orderId);
         String stuId = order.getStuId();
         UserInfo userInfo = userService.selectByStuIdForAuth(stuId);
         Integer score = userInfo.getCreditScore();
-        score -= 10;
+        score -= (int)Math.round(20*weight);
         userInfo.setCreditScore(score);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("subScore",(int)Math.round(20*weight));
+        map.put("orderId",orderId);
         int result1=orderService.updateCreditScoreByOrderId(userInfo);
-        int result=orderService.updateDefaultByOrderId(orderId);
-        if(result!=0&&result1!=0)
+        int result2=orderService.updateDefaultByOrderId(map);
+        if(result2!=0&&result1!=0)
             System.out.println("更新成功");
         return "confirmSeated";
     }
@@ -119,6 +147,28 @@ public class OrderController {
     }
     @Scheduled(cron="0 0/5 * * * ?")
     public void scanDefaultOrder(){
+        SimpleDateFormat Csdf = new SimpleDateFormat("yyyy-MM-dd");
+        String yesterday=Csdf.format(new Date().getTime()- 86400000L);
+        OccupancyRate result=orderService.selectRate(yesterday);
+        BigDecimal rate=result.getRate();
+        double weight=0;
+        BigDecimal ninety=new BigDecimal(90);
+        BigDecimal eighty=new BigDecimal(80);
+        BigDecimal seventy=new BigDecimal(70);
+        BigDecimal sixty=new BigDecimal(60);
+        BigDecimal fifty=new BigDecimal(50);
+        if(rate.compareTo(ninety)==1||rate.compareTo(ninety)==0)
+            weight=2;
+        else if(rate.compareTo(eighty)==1||rate.compareTo(eighty)==0)
+            weight=1.8;
+        else if(rate.compareTo(seventy)==1||rate.compareTo(seventy)==0)
+            weight=1.6;
+        else if(rate.compareTo(sixty)==1||rate.compareTo(sixty)==0)
+            weight=1.4;
+        else if(rate.compareTo(fifty)==1||rate.compareTo(fifty)==0)
+            weight=1.2;
+        else
+            weight=1;
         List<Order> list = orderService.selectNoArrivedOrderList();
         for(Order o:list){
             String date = o.getOrderDate()+" "+o.getOrderTime().split("-")[0];
@@ -128,7 +178,7 @@ public class OrderController {
             //System.out.println(stuId);
             UserInfo userInfo = userService.selectByStuIdForAuth(stuId);
             Integer creditScore = userInfo.getCreditScore();
-            creditScore -=10;
+            creditScore -=(int)Math.round(20*weight);
             userInfo.setCreditScore(creditScore);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//要转换的日期格式，根据实际调整""里面内容
             try {
@@ -136,9 +186,12 @@ public class OrderController {
                 //System.out.println(now);
                 long nowToSecond = sdf.parse(now).getTime();
                 long dateToSecond = sdf.parse(date).getTime();//sdf.parse()实现日期转换为Date格式，然后getTime()转换为毫秒数值
+                HashMap<String,Object> map = new HashMap<>();
+                map.put("subScore",(int)Math.round(20*weight));
+                map.put("orderId",o.getOrderId());
                 if(nowToSecond-dateToSecond>900){
                     System.out.println("正在执行更新...");
-                    orderService.updateDefaultByOrderId(o.getOrderId());
+                    orderService.updateDefaultByOrderId(map);
                     orderService.updateCreditScoreByOrderId(userInfo);
                     System.out.println("更新结束...");
                 }
@@ -150,5 +203,23 @@ public class OrderController {
 
         }
         System.out.println("正在执行.....");
+    }
+    @Scheduled(cron="0 0 23 * * ?")
+    public void calRate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(new Date());
+        System.out.println(today);
+        int result=orderService.selectCountOrders(today);
+        double rate = result*1.0/1280;
+        BigDecimal bg = new BigDecimal(rate).setScale(2, RoundingMode.UP);
+        System.out.println("占座率为:"+bg);
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("usualDate",today);
+        map.put("Rate",bg);
+        int insertResult=orderService.insertRate(map);
+        if(insertResult==1)
+            System.out.println("插入成功");
+        else
+            System.out.println("插入失败");
     }
 }

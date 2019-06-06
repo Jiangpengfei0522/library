@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.ReportMapper">
+    <resultMap id="ReportResultMap" type="com.library.bean.Report">
+        <id column="report_id" property="reportId" jdbcType="INTEGER"/>
+        <result column="stu_id" property="stuId" jdbcType="VARCHAR"/>
+        <result column="floor_id" property="floorId" jdbcType="INTEGER"/>
+        <result column="block_id" property="blockId" jdbcType="VARCHAR"/>
+        <result column="desk_id" property="deskId" jdbcType="INTEGER"/>
+        <result column="seat_id" property="seatId" jdbcType="VARCHAR"/>
+        <result column="reportDate" property="reportDate" jdbcType="VARCHAR"/>
+        <result column="reportTime" property="reportTime" jdbcType="VARCHAR"/>
+        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="is_confirmed" property="isConfirmed" jdbcType="INTEGER"/>
+        <result column="sub_score" property="subScore" jdbcType="INTEGER"/>
+        <result column="add_score" property="addScore" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Report_Column_List">
+        report_id,stu_id,floor_id,block_id,desk_id,seat_id,reportDate,reportTime,order_id,is_confirmed,sub_score,add_score
+    </sql>
+    <!-- 根据分页数据start 和size查询数据 -->
+    <select id="selectReportByPage" parameterType="Map" resultMap="ReportResultMap">
+        select <include refid="Report_Column_List"/>
+        from reportEmptySeat where is_confirmed=0
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+    <!--更新举报状态-->
+    <update id="updateIsConfirmed" parameterType="Map">
+        update reportEmptySeat set is_confirmed=#{isConfirmed},sub_score=#{subScore},add_score=#{addScore} where report_id=#{reportId}
+    </update>
+    <!--计算总记录数-->
+    <select id="selectCountReport" resultType="java.lang.Integer">
+        select count(*) from reportEmptySeat where is_confirmed=0
+    </select>
+    <!--根据reportId查找一条记录-->
+    <select id="selectSingleReport" parameterType="java.lang.Integer" resultMap="ReportResultMap">
+        select <include refid="Report_Column_List"/> from reportEmptySeat where report_id=#{reportId}
+    </select>
+</mapper>

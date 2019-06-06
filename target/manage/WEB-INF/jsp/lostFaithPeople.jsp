@@ -86,7 +86,7 @@
                 pieCharts.setOption({
                     series: [
                         {
-                            name: '成绩',
+                            name: '诚信/失信人数统计',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
