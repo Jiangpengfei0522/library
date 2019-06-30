@@ -17,7 +17,7 @@ public class ReportServiceImpl implements IReportService {
     ReportMapper reportMapper;
 
     @Override
-    public PageBean<Report> selectReportByPage(int currentPage) {
+    public PageBean<Report> selectReportByPage(int currentPage,String stuId) {
         HashMap<String,Object> map = new HashMap<String,Object>();
         PageBean<Report> pageBean = new PageBean<Report>();
 
@@ -29,7 +29,7 @@ public class ReportServiceImpl implements IReportService {
         pageBean.setPageSize(pageSize);
 
         //封装总记录数
-        int totalCount = reportMapper.selectCountReport();
+        int totalCount = reportMapper.selectCountReport(stuId);
         pageBean.setTotalCount(totalCount);
 
         //封装总页数
@@ -39,10 +39,11 @@ public class ReportServiceImpl implements IReportService {
 
         map.put("start",(currentPage-1)*pageSize);
         map.put("size", pageBean.getPageSize());
+        map.put("stuId",stuId);
         //封装每页显示的数据
         List<Report> lists = reportMapper.selectReportByPage(map);
         pageBean.setLists(lists);
-
+        pageBean.setStuId(stuId);
         return pageBean;
     }
 

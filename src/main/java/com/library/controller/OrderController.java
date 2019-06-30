@@ -31,8 +31,12 @@ public class OrderController {
 
     @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
     public String doQuery(@RequestParam(value="currentPage",defaultValue = "1",required = false) int currentPage,
+                          @RequestParam(value = "stuId",defaultValue = "",required = false) String stuId,
                           Map<String,Object> map){
-        PageBean<Order> pageBean= orderService.selectOrderByPage(currentPage);
+        if("".equals(stuId))
+            stuId=null;
+        System.out.println("stuId="+stuId);
+        PageBean<Order> pageBean= orderService.selectOrderByPage(currentPage,stuId);
         map.put("orderPageMsg",pageBean);
         System.out.println(pageBean);
         return "confirmSeated";
@@ -150,7 +154,10 @@ public class OrderController {
         SimpleDateFormat Csdf = new SimpleDateFormat("yyyy-MM-dd");
         String yesterday=Csdf.format(new Date().getTime()- 86400000L);
         OccupancyRate result=orderService.selectRate(yesterday);
-        BigDecimal rate=result.getRate();
+        BigDecimal rate=new BigDecimal(60);
+        if(null!=result){
+            rate=result.getRate();
+        }
         double weight=0;
         BigDecimal ninety=new BigDecimal(90);
         BigDecimal eighty=new BigDecimal(80);
@@ -170,17 +177,14 @@ public class OrderController {
         else
             weight=1;
         List<Order> list = orderService.selectNoArrivedOrderList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//要转换的日期格式，根据实际调整""里面内容
         for(Order o:list){
             String date = o.getOrderDate()+" "+o.getOrderTime().split("-")[0];
-            //System.out.println(date);
-            //System.out.println(o);
             String stuId=o.getStuId();
-            //System.out.println(stuId);
             UserInfo userInfo = userService.selectByStuIdForAuth(stuId);
             Integer creditScore = userInfo.getCreditScore();
             creditScore -=(int)Math.round(20*weight);
             userInfo.setCreditScore(creditScore);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");//要转换的日期格式，根据实际调整""里面内容
             try {
                 String now = sdf.format(new Date());
                 //System.out.println(now);
@@ -190,7 +194,7 @@ public class OrderController {
                 map.put("subScore",(int)Math.round(20*weight));
                 map.put("orderId",o.getOrderId());
                 if(nowToSecond-dateToSecond>900){
-                    System.out.println("正在执行更新...");
+                    System.out.println("正在执行未到达确认违约更新...");
                     orderService.updateDefaultByOrderId(map);
                     orderService.updateCreditScoreByOrderId(userInfo);
                     System.out.println("更新结束...");
@@ -200,7 +204,90 @@ public class OrderController {
             }catch (ParseException e){
                 e.printStackTrace();
             }
+        }
+        System.out.println("开始执行自动确认离座功能...");
+        List<Order> listNotConfirmedEnd = orderService.selectNotConfirmedEnd();
+        for(Order o:listNotConfirmedEnd){
+            String startDate = o.getOrderDate()+" "+o.getOrderTime().split("-")[0];
+            String endDate = o.getOrderDate()+" "+o.getOrderTime().split("-")[1];
+            String stuId=o.getStuId();
+            UserInfo userInfo = userService.selectByStuIdForAuth(stuId);
+            Integer creditScore = userInfo.getCreditScore();
+            creditScore +=5;
+            userInfo.setCreditScore(creditScore);
+            try {
+                String now = sdf.format(new Date());
+                //System.out.println(now);
+                long nowToSecond = sdf.parse(now).getTime();
+                long startDateToSecond = sdf.parse(startDate).getTime();
+                long endDateToSecond = sdf.parse(endDate).getTime();//sdf.parse()实现日期转换为Date格式，然后getTime()转换为毫秒数值
+                if(nowToSecond-startDateToSecond>1800){
+                    System.out.println("正在执行加分操作...");
+                    orderService.updateCreditScoreByOrderId(userInfo);
+                    System.out.println("操作结束...");
+                }
+                if(nowToSecond-endDateToSecond>300){
+                    System.out.println("正在执行更新确认结束...");
+                    orderService.updateEnd(o.getOrderId());
+                    System.out.println("更新结束...");
+                }
+            }catch (ParseException e){
+                e.printStackTrace();
+            }
+        }
+        System.out.println("开始执行查询暂时离座功能...");
+        SimpleDateFormat sdfForStep = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+        List<Order> stepList = orderService.selectStepOutSet();
+        String timeEleven = Csdf.format(new Date())+" 11:00:00";
+        String timeOne = Csdf.format(new Date())+" 13:00:00";
+        String timeFour = Csdf.format(new Date())+" 16:00:00";
+        String timeSix = Csdf.format(new Date())+" 18:00:00";
+        long elevenSeconds=0;
+        long oneSeconds=0;
+        long fourSeconds=0;
+        long sixSeconds=0;
+        long timeInterval=1800;
+        try {
+            elevenSeconds = sdfForStep.parse(timeEleven).getTime();
+            oneSeconds = sdfForStep.parse(timeOne).getTime();
+            fourSeconds = sdfForStep.parse(timeFour).getTime();
+            sixSeconds = sdfForStep.parse(timeSix).getTime();
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
 
+        if(null==stepList || stepList.size()==0){
+            System.out.println("目前暂无暂时离座预约信息");
+        }
+        else{
+            for(Order o:stepList){
+                System.out.println(o);
+                String date = Csdf.format(new Date())+" "+o.getStepOutTime();
+                try {
+                    String now = sdfForStep.format(new Date());
+                    //System.out.println(now);
+                    long nowToSecond = sdfForStep.parse(now).getTime();
+                    long dateToSecond = sdfForStep.parse(date).getTime();//sdf.parse()实现日期转换为Date格式，然后getTime()转换为毫秒数值
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("subScore",(int)Math.round(20*weight));
+                    map.put("orderId",o.getOrderId());
+                    if((nowToSecond>elevenSeconds && nowToSecond<oneSeconds)||(nowToSecond>fourSeconds && nowToSecond<sixSeconds))
+                        timeInterval=3600;
+                    if(nowToSecond-dateToSecond>timeInterval){
+                        System.out.println("正在执行更新确认结束...");
+                        String stuId=o.getStuId();
+                        UserInfo userInfo = userService.selectByStuIdForAuth(stuId);
+                        Integer creditScore = userInfo.getCreditScore();
+                        creditScore -=(int)Math.round(20*weight);
+                        userInfo.setCreditScore(creditScore);
+                        orderService.updateDefaultByOrderId(map);
+                        orderService.updateCreditScoreByOrderId(userInfo);
+                        System.out.println("更新结束...");
+                    }
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+            }
         }
         System.out.println("正在执行.....");
     }

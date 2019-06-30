@@ -43,18 +43,20 @@
                         <td>联系电话</td>
                         <td>本人照片</td>
                         <td>信用分</td>
-                        <td>是否审核</td>
+                        <td>账号状态</td>
+                        <td>操作</td>
                     </tr>
                 </thead>
                 <c:forEach items="${requestScope.pageMsg.lists}" var="u">
                     <tr>
-                        <th>${u.stuId}</th>
-                        <th>${u.name}</th>
-                        <th>${u.university}</th>
-                        <th>${u.telephone}</th>
-                        <th><a href="${u.selfPhoto}">点击查看图片</a></th>
-                        <th>${u.creditScore}</th>
-                        <th><a href="${pageContext.request.contextPath }/user/check?stuId=${u.stuId}">未审核</a></th>
+                        <td>${u.stuId}</td>
+                        <td>${u.name}</td>
+                        <td>${u.university}</td>
+                        <td>${u.telephone}</td>
+                        <td><a href="${u.selfPhoto}">点击查看图片</a></td>
+                        <td>${u.creditScore}</td>
+                        <td>未审核</td>
+                        <td><a href="${pageContext.request.contextPath }/user/check?stuId=${u.stuId}" onclick="if(confirm('确认通过审核吗？')==false)return false;">通过审核</a></td>
                     </tr>
                 </c:forEach>
             </table>

@@ -3,6 +3,7 @@ package com.library.mapper;
 import com.library.bean.OccupancyRate;
 import com.library.bean.Order;
 import com.library.bean.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +20,15 @@ public interface OrderMapper {
     //更新信用分
     int updateCreditScoreByOrderId(UserInfo userInfo);
     //获得符合要求的订单总数
-    int selectCount();
+    int selectCount(@Param("stuId") String stuId);
     //获得符合要求的订单结果集
-    List<Order> selectOrderList();
     List<Order> selectNoArrivedOrderList();
+    //查询未确认结束的预约
+    List<Order> selectNotConfirmedEnd();
+    //更新预约状态为已结束
+    int updateEnd(Integer orderId);
+    //查询暂时离座的集合
+    List<Order> selectStepOutSet();
 
     List<String> selectStuIdSetByDate(String orderDate);
     int selectCollegeByStuId(String stuId);

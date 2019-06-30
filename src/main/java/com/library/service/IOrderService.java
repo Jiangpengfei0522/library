@@ -12,11 +12,10 @@ import java.util.List;
 
 public interface IOrderService {
     Order selectByOrderId(Integer orderId);
-    PageBean<Order> selectOrderByPage(int currentPage);
+    PageBean<Order> selectOrderByPage(int currentPage,String stuId);
     int updateConfirmByOrderId(Integer orderId);
     int updateDefaultByOrderId(HashMap<String,Object> map);
     int updateCreditScoreByOrderId(UserInfo userInfo);
-    List<Order> selectOrderList();
     List<Order> selectNoArrivedOrderList();
     List<String> selectStuIdSetByDate(String orderDate);
     int selectCollegeByStuId(String stuId);
@@ -24,4 +23,7 @@ public interface IOrderService {
     OccupancyRate selectRate(String usualDate);
     int selectCountOrders(String orderDate);
     int insertRate(HashMap<String,Object> map);
+    List<Order> selectNotConfirmedEnd();
+    int updateEnd(Integer orderId);
+    List<Order> selectStepOutSet();
 }

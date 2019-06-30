@@ -46,17 +46,17 @@
                 </thead>
                 <c:forEach items="${requestScope.pageMsgForAuth.lists}" var="u">
                     <tr>
-                        <th>${u.stuId}</th>
-                        <th>${u.name}</th>
-                        <th>${u.university}</th>
-                        <th>${u.telephone}</th>
-                        <th><a href="${pageContext.request.contextPath }/${u.selfPhoto}">点击查看图片</a></th>
-                        <th>${u.creditScore}</th>
+                        <td>${u.stuId}</td>
+                        <td>${u.name}</td>
+                        <td>${u.university}</td>
+                        <td>${u.telephone}</td>
+                        <td><a href="${pageContext.request.contextPath }/${u.selfPhoto}">点击查看图片</a></td>
+                        <td>${u.creditScore}</td>
                         <c:if test="${u.isForbidden==0}">
-                            <th><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=1">禁用</a></th>
+                            <td><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=1" onclick="if(confirm('确认禁用该用户所有权限吗？')==false)return false;">禁用</a></td>
                         </c:if>
                         <c:if test="${u.isForbidden==1}">
-                            <th><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=0">恢复</a></th>
+                            <td><a href="${pageContext.request.contextPath }/user/forbidden?stuId=${u.stuId}&isForbidden=0" onclick="if(confirm('确认恢复该用户所有权限吗？')==false)return false;">恢复</a></td>
                         </c:if>
                     </tr>
                 </c:forEach>

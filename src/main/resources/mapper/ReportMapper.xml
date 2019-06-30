@@ -22,7 +22,11 @@
     <!-- 根据分页数据start 和size查询数据 -->
     <select id="selectReportByPage" parameterType="Map" resultMap="ReportResultMap">
         select <include refid="Report_Column_List"/>
-        from reportEmptySeat where is_confirmed=0
+        from reportEmptySeat
+        <if test="stuId!=null">
+            where stu_id=#{stuId}
+        </if>
+        order by is_confirmed
         <if test="start!=null and size!=null">
             limit #{start},#{size}
         </if>
@@ -32,8 +36,11 @@
         update reportEmptySeat set is_confirmed=#{isConfirmed},sub_score=#{subScore},add_score=#{addScore} where report_id=#{reportId}
     </update>
     <!--计算总记录数-->
-    <select id="selectCountReport" resultType="java.lang.Integer">
-        select count(*) from reportEmptySeat where is_confirmed=0
+    <select id="selectCountReport" resultType="java.lang.Integer" parameterType="String">
+        select count(*) from reportEmptySeat
+        <if test="stuId!=null">
+            where stu_id=#{stuId}
+        </if>
     </select>
     <!--根据reportId查找一条记录-->
     <select id="selectSingleReport" parameterType="java.lang.Integer" resultMap="ReportResultMap">

@@ -28,8 +28,11 @@ public class ReportController {
 
     @RequestMapping(value = "/queryReport",method = RequestMethod.GET)
     public String doReportQuery(@RequestParam(value="currentPage",defaultValue = "1",required = false) int currentPage,
+                          @RequestParam(value = "stuId",defaultValue = "",required = false) String stuId,
                           Map<String,Object> map){
-        PageBean<Report> pageBean= reportService.selectReportByPage(currentPage);
+        if("".equals(stuId))
+            stuId=null;
+        PageBean<Report> pageBean= reportService.selectReportByPage(currentPage,stuId);
         map.put("reportPageMsg",pageBean);
         System.out.println(pageBean);
         return "reportSet";

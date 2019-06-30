@@ -21,8 +21,24 @@ public class OrderServiceImpl implements IOrderService {
     public Order selectByOrderId(Integer orderId) {
         return orderMapper.selectByOrderId(orderId);
     }
+
     @Override
-    public  PageBean<Order> selectOrderByPage(int currentPage) {
+    public List<Order> selectNotConfirmedEnd() {
+        return orderMapper.selectNotConfirmedEnd();
+    }
+
+    @Override
+    public int updateEnd(Integer orderId) {
+        return orderMapper.updateEnd(orderId);
+    }
+
+    @Override
+    public List<Order> selectStepOutSet() {
+        return orderMapper.selectStepOutSet();
+    }
+
+    @Override
+    public  PageBean<Order> selectOrderByPage(int currentPage,String stuId) {
         HashMap<String,Object> map = new HashMap<String,Object>();
         PageBean<Order> pageBean = new PageBean<Order>();
 
@@ -34,7 +50,7 @@ public class OrderServiceImpl implements IOrderService {
         pageBean.setPageSize(pageSize);
 
         //封装总记录数
-        int totalCount = orderMapper.selectCount();
+        int totalCount = orderMapper.selectCount(stuId);
         pageBean.setTotalCount(totalCount);
 
         //封装总页数
@@ -44,10 +60,11 @@ public class OrderServiceImpl implements IOrderService {
 
         map.put("start",(currentPage-1)*pageSize);
         map.put("size", pageBean.getPageSize());
+        map.put("stuId",stuId);
         //封装每页显示的数据
         List<Order> lists = orderMapper.selectOrderByPage(map);
         pageBean.setLists(lists);
-
+        pageBean.setStuId(stuId);
         return pageBean;
     }
 
@@ -64,11 +81,6 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public int updateCreditScoreByOrderId(UserInfo userInfo) {
         return orderMapper.updateCreditScoreByOrderId(userInfo);
-    }
-
-    @Override
-    public List<Order> selectOrderList() {
-        return orderMapper.selectOrderList();
     }
 
     @Override

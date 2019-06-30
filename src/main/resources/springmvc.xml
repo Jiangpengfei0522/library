@@ -16,6 +16,7 @@
     <mvc:annotation-driven/>
     <!-- 静态资源处理  css js imgs -->
     <mvc:default-servlet-handler/>
+    <!--启动自动执行任务扫描-->
     <task:annotation-driven/>
 
     <!--避免IE执行AJAX时，返回JSON出现下载文件 -->

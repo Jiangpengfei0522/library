@@ -14,11 +14,12 @@ public class Order {
     private Integer orderId;
     private String arrivedPhoto;
     private Integer isArrived;
+    private String stepOutTime;
 
     public Order() {
     }
 
-    public Order(String stuId, Integer floorId, String blockId, Integer deskId, String seatId, String orderDate, String orderTime, String orderWeek, Integer isUsing, Integer sub_score, Integer orderId, String arrivedPhoto, Integer isArrived) {
+    public Order(String stuId, Integer floorId, String blockId, Integer deskId, String seatId, String orderDate, String orderTime, String orderWeek, Integer isUsing, Integer sub_score, Integer orderId, String arrivedPhoto, Integer isArrived, String stepOutTime) {
         this.stuId = stuId;
         this.floorId = floorId;
         this.blockId = blockId;
@@ -32,6 +33,15 @@ public class Order {
         this.orderId = orderId;
         this.arrivedPhoto = arrivedPhoto;
         this.isArrived = isArrived;
+        this.stepOutTime = stepOutTime;
+    }
+
+    public String getStepOutTime() {
+        return stepOutTime;
+    }
+
+    public void setStepOutTime(String stepOutTime) {
+        this.stepOutTime = stepOutTime;
     }
 
     public String getStuId() {
@@ -154,6 +164,7 @@ public class Order {
                 ", orderId=" + orderId +
                 ", arrivedPhoto='" + arrivedPhoto + '\'' +
                 ", isArrived=" + isArrived +
+                ",stepOutTime" + stepOutTime+
                 '}';
     }
 }
